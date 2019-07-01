@@ -1,0 +1,18 @@
+%YAML 1.1
+# Real-Time clocks hardware test
+---
+title: "Real-Time clocks hardware test"
+description: |-
+    Real-time clocks a tested by means of sysfs device nodes and
+    hwclock/data utilties. Sysfs dir/file hierarchy is used to detect
+    the character device of the hardware with the specified 'bus/addr'
+    pair. While 'hwclock' and 'date' utilities are utilized to set
+    and get the reference 'date' in the full-date format (%F: %+4Y-%m-%d).
+type: "localfile"
+exec: "rtc_access.sh"
+args: !!omap # Must be ordered map (sequence of mappings) or omitted
+    - bus: "i2c"
+    - addr: "0-0000"
+    - date: "2000-01-01"
+interactive: false
+timeout: 5000

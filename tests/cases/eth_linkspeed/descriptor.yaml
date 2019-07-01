@@ -1,0 +1,27 @@
+%YAML 1.1
+# Ethernet interfaces link speed test
+---
+title: "Ethernet link speed test"
+description: |-
+    Ethernet link speed test is performed by means of 'ethtool' utility and
+    is intended to check whether the specified interfaces are able to
+    advertise the link Speed/Duplex up to the passed values. Generally
+    speaking the speed can be 10, 100 or 1000 (Mb/s), while Duplex - 
+    either 'Full' or 'Half', but it isn't prohibited to set any value in
+    scenarios making use of this test. Originally this test has been
+    created for two interfaces loopbacked to each other, though nothing
+    prevents it to be utilized with both interfaces connected to some
+    remote device, or with a single loopbacked interface or with a single
+    interface connected to some remote device. In the last two cases just
+    set both 'iface1' and 'iface2' to be the same device.
+type: "localfile"
+exec: "eth_linkspeed.sh"
+args: !!omap # Must be ordered map (sequence of mappings) or omitted
+    - iface1_bus: "soc"
+    - iface1_addr: "soc0/axi/1f05e000.eth1"
+    - iface2_bus: "soc"
+    - iface2_addr: "soc0/axi/1f060000.eth2"
+    - speed: "1000"
+    - duplex: "Full"
+interactive: false
+timeout: 30000

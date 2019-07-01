@@ -1,0 +1,17 @@
+%YAML 1.1
+# GPIO input value test
+---
+title: "GPIOs input value test"
+description: |-
+    A simple testcase to check whether the GPIO with specified 'bus/addr/hwid'
+    triple met the defined 'value' within the 'timeout'. If 'value' isn't 
+    detected at the time range ('timeout' - 1) ms, the test will be failed.
+type: "localfile"
+exec: "gpio_input.sh"
+args: !!omap # Must be ordered map (sequence of mappings) or omitted
+    - bus: "undefined"
+    - addr: ""
+    - hwid: "0"
+    - value: "0"
+interactive: false
+timeout: 20000

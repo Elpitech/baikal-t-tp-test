@@ -1,0 +1,21 @@
+%YAML 1.1
+# Ethernet interfaces loopback test based on the linkloop utility
+---
+title: "Ethernet linkloop-based test"
+description: |-
+    Loopbacked ethernet interfaces test is based on the 'linkloop' utility,
+    which is able to perform a link-level (level 2) ping procedure. That
+    is to send a raw-packet from the source interface determined by 'src_bus'
+    'src_addr' to the destination interface MAC-address with specified 'dst_bus'
+    and 'dst_addr'. This test is supposed to work either with different
+    interfaces connected to each other or with a single source and destination
+    interface, which is stubbed with a Tx/Rx loopback cable.
+type: "localfile"
+exec: "eth_linkloop.sh"
+args: !!omap # Must be ordered map (sequence of mappings) or omitted
+    - src_bus: "soc"
+    - src_addr: "soc0/axi/1f05e000.eth1"
+    - dst_bus: "soc"
+    - dst_addr: "soc0/axi/1f060000.eth2"
+interactive: false
+timeout: 30000

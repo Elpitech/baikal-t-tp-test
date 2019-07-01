@@ -1,0 +1,33 @@
+%YAML 1.1
+# Serial ports loopback test
+---
+title: "Serial ports loopback test"
+description: |-
+    In order to perform the serial ports loopback test the source interface
+    Tx lane (of 'src_bus/src_addr/src_port' device) must be connected with
+    destination port Rx lane (of 'dst_bus/dst_addr/dst_port' device).
+    The test script customizes the interfaces by enabling the 'raw' mode
+    with 'echo' disabled, sets the specified 'baud' rate up and switches
+    the 'rs485' mode when it's requested. All of these settings are performed
+    by means of the 'stty' utility. Then a pattern is sent over the
+    loopbacked line from source to destination port so being expected to come
+    unmodified. In this case the test is considered to be passed.
+    Depending on the test configuration source and destination ports can be
+    either different or the same. Note also that even though some devices
+    like 'cp2108' support 'rs485' modes their driver actually can't
+    perform the 'rs485' paramter customization. It is supposed to be enabled
+    in the device firmware, so in this case the 'rs485' argument should
+    be set to 'no'.
+type: "localfile"
+exec: "serial_loopback.sh"
+args: !!omap # Must be ordered map (sequence of mappings) or omitted
+    - src_bus: "soc"
+    - src_addr: "soc0/apb/1f04b000.serial1"
+    - src_port: "0"
+    - dst_bus: "soc"
+    - dst_addr: "soc0/apb/1f04b000.serial1"
+    - dst_port: "0"
+    - baud: "9600"
+    - rs485: "no"
+interactive: false
+timeout: 5000

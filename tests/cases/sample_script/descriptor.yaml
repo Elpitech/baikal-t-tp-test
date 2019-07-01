@@ -1,0 +1,24 @@
+%YAML 1.1
+# Sample test script for T-platforms Test framework
+---
+title: "Sample test script"
+description: |-
+    This test is created as an example of the TP-test framework ability
+    to run executable files from the test-specific directory
+    '<root>/cases/<testname>/<exec>'. In this case the test 'type'
+    must be 'localfile' with 'exec' member specifying the executable
+    filename. The 'args' mapping element describes the script arguments,
+    their order and default values. 'Interactive' boolean flag permits
+    the program to access the program console to send/receive data
+    to/from the user and the 'timeout' option specifies the test timeout
+    in ms after which the executable is terminated. The last two parameters
+    as well as 'title' and 'description' are optional. If they aren't
+    specified the interactive mode will be disabled, timeout will be
+    1000 ms, title and description will be initialized with 'undefined'
+    string.
+type: "localfile"
+exec: "sample_script.sh"
+args: !!omap # Must be ordered map (sequence of mappings) or omitted
+    - string: "Sample test string"
+interactive: false
+timeout: 100

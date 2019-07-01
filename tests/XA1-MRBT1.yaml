@@ -1,0 +1,82 @@
+%YAML 1.1
+# XA1-RMBT1 debug-board test scenario
+---
+title: "XA1-MRBT1 debug-board test scenario"
+description: |-
+    XA1-MRBT1-A is a specific board to debug mezzanine MRBT1 cards.
+    In particular it is equipped with a set of devices connected to the
+    main card interfaces like:
+    + PCIe x16 socket,
+    + 2xSATA interfaces,
+    + 2xGBE RJ45 sockets,
+    + USB Type-A interface,
+    + 1xPCA9535 GPIOx16 expanders connected to i2c0 GP interface,
+    + 1xMT25QU128 connected to SPI2 interfaces,
+    + Debug socket with BMC SWD, i2c1 PM, UART0, BMC UART, SPI0 interfaces.
+    This scenarion is created to test MRBT1 mezzanine cards in the framework
+    of testcases for PCIe, SATA, GBE, USB, SD, i2c, SPI and GPIO interfaces.
+tests: !!omap # Must be ordered map (sequence of mappings) or omitted
+    - pci_detect: {info: "PCIe DW Root port test", vid: "0x1D39", did: "0x8060"}
+    - pci_detect: {info: "PCIe SM2260 NVMe test", vid: "0x126F", did: "0x2260"}
+    - usb_port: {info: "USB port 1-1 test", port: "1-1"}
+    - storage_timings: {info: "SATA0 timings test", iface: "sata", port: "0",
+                                                    cached: "1000", buffered: "50"}
+    - storage_timings: {info: "SATA1 timings test", iface: "sata", port: "1",
+                                                    cached: "1000", buffered: "50"}
+    - storage_timings: {info: "MMC-SPI storage timings test", iface: "mmc", port: "0",
+                                                          cached: "500", buffered: "1"}
+    - storage_timings: {info: "USB storage timings test", iface: "usb", port: "1-1:1.0",
+                                                          cached: "1000", buffered: "10"}
+    - eth_linkspeed: {info: "GBE0/GBE1 link speed test", iface1_bus: "soc", iface1_addr: "soc0/axi/1f05e000.eth1",
+                                                         iface2_bus: "soc", iface2_addr: "soc0/axi/1f060000.eth2",
+                                                         speed: "1000", duplex: "Full"}
+    - eth_linkloop: {info: "GBE0 -> GBE1 loopback test", src_bus: "soc", src_addr: "soc0/axi/1f05e000.eth1",
+                                                         dst_bus: "soc", dst_addr: "soc0/axi/1f060000.eth2"}
+    - eth_linkloop: {info: "GBE1 -> GBE0 loopback test", src_bus: "soc", src_addr: "soc0/axi/1f060000.eth2",
+                                                         dst_bus: "soc", dst_addr: "soc0/axi/1f05e000.eth1"}
+    - gpio_loopback: {info: "BT GPIO 21 out test", out_bus: "soc", out_addr: "soc0/apb/1f044000.gpio", out_hwid: "21",
+                                                   in_bus: "i2c", in_addr: "0-0020", in_hwid: "4", inverted: "no"}
+    - gpio_loopback: {info: "BT GPIO 21 in test", out_bus: "i2c", out_addr: "0-0020", out_hwid: "4", inverted: "no",
+                                                  in_bus: "soc", in_addr: "soc0/apb/1f044000.gpio", in_hwid: "21"}
+    - gpio_loopback: {info: "BT GPIO 22 out test", out_bus: "soc", out_addr: "soc0/apb/1f044000.gpio", out_hwid: "22",
+                                                   in_bus: "i2c", in_addr: "0-0020", in_hwid: "5", inverted: "no"}
+    - gpio_loopback: {info: "BT GPIO 22 in test", out_bus: "i2c", out_addr: "0-0020", out_hwid: "5", inverted: "no",
+                                                  in_bus: "soc", in_addr: "soc0/apb/1f044000.gpio", in_hwid: "22"}
+    - gpio_loopback: {info: "BT GPIO 23 out test", out_bus: "soc", out_addr: "soc0/apb/1f044000.gpio", out_hwid: "23",
+                                                   in_bus: "i2c", in_addr: "0-0020", in_hwid: "6", inverted: "no"}
+    - gpio_loopback: {info: "BT GPIO 23 in test", out_bus: "i2c", out_addr: "0-0020", out_hwid: "6", inverted: "no",
+                                                  in_bus: "soc", in_addr: "soc0/apb/1f044000.gpio", in_hwid: "23"}
+    - gpio_loopback: {info: "BT GPIO 24 out test", out_bus: "soc", out_addr: "soc0/apb/1f044000.gpio", out_hwid: "24",
+                                                   in_bus: "i2c", in_addr: "0-0020", in_hwid: "7", inverted: "no"}
+    - gpio_loopback: {info: "BT GPIO 24 in test", out_bus: "i2c", out_addr: "0-0020", out_hwid: "7", inverted: "no",
+                                                  in_bus: "soc", in_addr: "soc0/apb/1f044000.gpio", in_hwid: "24"}
+    - gpio_loopback: {info: "BT GPIO 26 out test", out_bus: "soc", out_addr: "soc0/apb/1f044000.gpio", out_hwid: "26",
+                                                   in_bus: "i2c", in_addr: "0-0020", in_hwid: "8", inverted: "no"}
+    - gpio_loopback: {info: "BT GPIO 26 in test", out_bus: "i2c", out_addr: "0-0020", out_hwid: "8", inverted: "no",
+                                                  in_bus: "soc", in_addr: "soc0/apb/1f044000.gpio", in_hwid: "26"}
+    - gpio_loopback: {info: "BT GPIO 27 out test", out_bus: "soc", out_addr: "soc0/apb/1f044000.gpio", out_hwid: "27",
+                                                   in_bus: "i2c", in_addr: "0-0020", in_hwid: "9", inverted: "no"}
+    - gpio_loopback: {info: "BT GPIO 27 in test", out_bus: "i2c", out_addr: "0-0020", out_hwid: "9", inverted: "no",
+                                                  in_bus: "soc", in_addr: "soc0/apb/1f044000.gpio", in_hwid: "27"}
+    - gpio_loopback: {info: "BT GPIO 28 out test", out_bus: "soc", out_addr: "soc0/apb/1f044000.gpio", out_hwid: "28",
+                                                   in_bus: "i2c", in_addr: "0-0020", in_hwid: "10", inverted: "no"}
+    - gpio_loopback: {info: "BT GPIO 28 in test", out_bus: "i2c", out_addr: "0-0020", out_hwid: "10", inverted: "no",
+                                                  in_bus: "soc", in_addr: "soc0/apb/1f044000.gpio", in_hwid: "28"}
+    - gpio_loopback: {info: "BT GPIO 29 out test", out_bus: "soc", out_addr: "soc0/apb/1f044000.gpio", out_hwid: "29",
+                                                   in_bus: "i2c", in_addr: "0-0020", in_hwid: "11", inverted: "no"}
+    - gpio_loopback: {info: "BT GPIO 29 in test", out_bus: "i2c", out_addr: "0-0020", out_hwid: "11", inverted: "no",
+                                                  in_bus: "soc", in_addr: "soc0/apb/1f044000.gpio", in_hwid: "29"}
+    - gpio_loopback: {info: "BT GPIO 30 out test", out_bus: "soc", out_addr: "soc0/apb/1f044000.gpio", out_hwid: "30",
+                                                   in_bus: "i2c", in_addr: "0-0020", in_hwid: "12", inverted: "no"}
+    - gpio_loopback: {info: "BT GPIO 30 in test", out_bus: "i2c", out_addr: "0-0020", out_hwid: "12", inverted: "no",
+                                                  in_bus: "soc", in_addr: "soc0/apb/1f044000.gpio", in_hwid: "30"}
+    - gpio_loopback: {info: "BT GPIO 31 out test", out_bus: "soc", out_addr: "soc0/apb/1f044000.gpio", out_hwid: "31",
+                                                   in_bus: "i2c", in_addr: "0-0020", in_hwid: "13", inverted: "no"}
+    - gpio_loopback: {info: "BT GPIO 31 in test", out_bus: "i2c", out_addr: "0-0020", out_hwid: "13", inverted: "no",
+                                                  in_bus: "soc", in_addr: "soc0/apb/1f044000.gpio", in_hwid: "31"}
+    - flash_mtdtest: {info: "SPI2-flash write/read test", bus: "soc", addr: "soc0/apb/1f04f000.spi1/spi_master/spi1/spi1.0",
+                                                          length: "4096", passes: "1", checks: "1"}
+    - sensors_input: {info: "PVT voltage sensor test", bus: "soc", addr: "soc0/apb/1f200000.pvt",
+                                                       type: "in1", min: "0.8", max: "1.2"}
+    - sensors_input: {info: "PVT temperature sensor test", bus: "soc", addr: "soc0/apb/1f200000.pvt",
+                                                           type: "temp1", min: "10.0", max: "95.0"}

@@ -1,0 +1,16 @@
+%YAML 1.1
+# USB port test
+---
+title: "USB port test"
+description: |-
+    USB port existence is tested by means of the sysfs directory nodes.
+    In particular if a USB port detects to have a device connected to
+    itself the corresponding sysfs node is created in '/sys/bus/usb/device/'
+    directory. If such a node pops up within the 'timeout' then the test
+    will be considered as passed.
+type: "localfile"
+exec: "usb_port.sh"
+args: !!omap # Must be ordered map (sequence of mappings) or omitted
+    - port: "1-1"
+interactive: false
+timeout: 15000

@@ -1,0 +1,25 @@
+%YAML 1.1
+# Always fail command test for T-platforms Test framework
+---
+title: "Always failed command test"
+description: |-
+    This test is created as an example of the TP-test framework ability
+    to run the executable commands and detect the error status. In particular
+    it executes the 'false' command, which makes this test always finish with
+    fialed status. In this case the test 'type' must be 'command' with 'exec'
+    member specifying the executable command name available in the environment
+    PATH or being a fullpath to the file. The 'args' mapping element describes
+    the command arguments, their order and default values (the actual values
+    used for the test are specified in the scenario file). 'Interactive'
+    boolean flag permits the test to access the program console to send/receive
+    data to/from the user and the 'timeout' options specifies the test timeout
+    after which the executable is terminated. The last two parameters as
+    well as the 'title' and 'description' are optional. If they aren't not
+    specified the interactive mode will be disabled, timeout will be 1000 ms,
+    title and description will be initialized with 'undefined' string.
+type: 'command'
+exec: 'false'
+args: !!omap # Must be ordered map (sequence of mappings) or omitted
+    - arg1: ""
+interactive: false
+timeout: 100

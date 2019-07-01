@@ -1,0 +1,18 @@
+%YAML 1.1
+# PCI device detection test
+---
+title: "PCI device detection test"
+description: |-
+    This is simple test, which performs a device detection by given
+    'vid' and 'did' (both of them are supposed to be a hex numbers with
+    optional '0x' prefix). It tries to find the first available device with
+    specified VID/DID pair. Then the script also prints the device info
+    to the log file by means of 'lspci' utility and reports that
+    the test is passed.
+type: "localfile"
+exec: "pci_detect.sh"
+args: !!omap # Must be ordered map (sequence of mappings) or omitted
+    - vid: "0x1d39"
+    - did: "0x8060"
+interactive: false
+timeout: 5000

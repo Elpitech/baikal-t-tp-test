@@ -1,0 +1,24 @@
+%YAML 1.1
+# MTD flash write/read test
+---
+title: "MTD flash write/read test"
+description: |-
+    Flash storages are exposed by the Linux kernel as 'mtdX' block devices.
+    There is a dedicated toolkit 'mtd-utils', which provides a lot of useful
+    utilities to work with them, including a 'nandtest' one, which executes
+    an simple erase/write/read/check/resotore cycle in purpose of the interface
+    functional testing. So this testcase is a wrapper around the 'nandtest'
+    utility to test whether the flash-device behind the 'bus/addr'
+    pair is tolerant to the 'nandtest' with set 'passes/checks' at the
+    first 'length' bytes of the storage. Note also that the utility accepts
+    the 'length' being eraseblocks multiple.
+type: "localfile"
+exec: "flash_mtdtest.sh"
+args: !!omap # Must be ordered map (sequence of mappings) or omitted
+    - bus: "soc"
+    - addr: "soc0/apb/1f04e000.spi0/spi_master/spi0/spi0.0"
+    - length: "4096"
+    - passes: "1"
+    - checks: "1"
+interactive: false
+timeout: 5000

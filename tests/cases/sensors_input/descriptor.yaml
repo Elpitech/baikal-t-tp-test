@@ -1,0 +1,20 @@
+%YAML 1.1
+# Sensor input test
+---
+title: "Sensor input test"
+description: |-
+    Sensors a tested by means of sysfs hwmon interface. Sysfs dir/file
+    hierarchy is used to detect the hwmonX device path with the specified
+    'bus/addr' pair. Then the corresponding 'type'_input file is used to
+    get the input from the sensor and test it against the limits 'min' and
+    'max'.
+type: "localfile"
+exec: "sensors_input.sh"
+args: !!omap # Must be ordered map (sequence of mappings) or omitted
+    - bus: "i2c"
+    - addr: "0-0000"
+    - type: "hwmon0"
+    - min: "0"
+    - max: "100"
+interactive: false
+timeout: 5000

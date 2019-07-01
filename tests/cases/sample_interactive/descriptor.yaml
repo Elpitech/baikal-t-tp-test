@@ -1,0 +1,17 @@
+%YAML 1.1
+# Interactive sample test script for T-platforms Test framework
+---
+title: "Interactive sample test script"
+description: |-
+    This test is created as an example of the TP-test framework ability
+    to run executable files in interactive mode. In this case the test
+    'type' must be 'localfile' with 'exec' member specifying the executable
+    filename. The 'args' mapping element describes the script arguments
+    are absent, while 'interactive' boolean flag is set to 'true' as a sign
+    of the test being ineractive, so to enable the corresponding TP-test
+    framework functionality. Timeout is extended to 15 seconds, to give a
+    time for user interactive actions.
+type: "localfile"
+exec: "sample_interactive.sh"
+interactive: true
+timeout: 15000

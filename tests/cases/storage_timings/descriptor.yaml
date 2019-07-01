@@ -1,0 +1,22 @@
+%YAML 1.1
+# Storage devices performance test
+---
+title: "Storage devices performance test"
+description: |-
+    This test is intended to perform a complex storage devices interface
+    check procedure. Firstly it tests whether the target device really
+    exists and detected by the system so the corresponding block device
+    is available. Then it executes the performance test by means of
+    'hdparm' utility. In order to properly identify the storage device
+    the corresponding 'iface' and 'port' must be specified. Finally the
+    test is passed only if the retrieved interface performance exceeds
+    defined 'cached' and 'buffered' timings (in MB/s).
+type: "localfile"
+exec: "storage_timings.sh"
+args: !!omap # Must be ordered map (sequence of mappings) or omitted
+    - iface: "sata"
+    - port: "0"
+    - cached: "0.0"
+    - buffered: "0.0"
+interactive: false
+timeout: 20000

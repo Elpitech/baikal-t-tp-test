@@ -1,0 +1,25 @@
+%YAML 1.1
+# Always passed command test for T-platforms Test framework
+---
+title: "Always passed command test"
+description: |-
+    This test is created as an example of the TP-test framework ability
+    to run the executable commands and detect the error status. In particular
+    it executes the 'true' command, which makes this test always finish with
+    passed status. In this case the test 'type' must be 'command' with 'exec'
+    member specifying the executable command name available in the environment
+    PATH or being a fullpath to the file. The 'args' mapping element is
+    supposed to describe the command arguments, their order and default values
+    (the actual value used for test can be customized in the scenario file).
+    Since this test doesn't accept any argument, the corresponding node is
+    omitted. 'Interactive' boolean flag permits the test to access the program
+    console to send/receive data to/from the user. The 'timeout' option
+    specifies the test timeout after which the executable is terminated.
+    The last two parameters as well as 'title' and 'description' are optional.
+    If they aren't specified the interactive mode will be disabled, timeout will
+    be 1000 ms, title and description will be initialized with 'undefined'
+    string.
+type: 'command'
+exec: 'true'
+interactive: false
+timeout: 100

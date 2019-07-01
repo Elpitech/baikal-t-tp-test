@@ -1,0 +1,27 @@
+%YAML 1.1
+# Sample scenario for T-platforms Test framework
+---
+title: "Sample scenario"
+description: |-
+    This scenario' purpose is to provide a basic knowledge of the way the
+    TP-test scenario files are supposed to look like. Scenario files are
+    the YAML-based descriptors of the corresponding test procedures. The
+    YAML documents are mappings with three members in the root of the tree
+    {title: "", description: "", tests: !!omap {- test1: {arg1: "val1", ...}}}.
+    Where 'title' and 'description' members are optional and will be replaced
+    with 'undefined' string if not presented. The last member of the mapping
+    contains the ordered map of tests being executed during the scenario
+    implementation (see the 'tests' element in this file for example). Each
+    sub-key of the 'tests' member is supposed to be the key of the corresponding
+    test (basically it is the directory name in <root>/cases/<key> with
+    'descriptor.yaml' file inside). The arguments names and their order are
+    described in the corresponding test descriptor file. Test' key and info
+    will be displayed during the scenario execution procedure. Needless to say
+    that if 'tests' node isn't specified or empty non of the tests will be
+    executed.
+tests: !!omap # Must be ordered map (sequence of mappings) or omitted
+    - sample_echo: {info: "Echo-command test", arg1: "Hello", arg2: ",", arg3: "echo!"}
+    - sample_pass: {info: "Always passed test"}
+    - sample_fail: {info: "Always failed test", arg1: "Ignored"}
+    - sample_script: {info: "Bash sample script", string: "Hi, tp-test script"}
+    - sample_interactive: {info: "Interactive sample test"}

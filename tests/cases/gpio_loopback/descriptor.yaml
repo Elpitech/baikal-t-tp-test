@@ -1,0 +1,26 @@
+%YAML 1.1
+# GPIOs loopback connectivity test
+---
+title: "GPIOs loopback connectivity test"
+description: |-
+    The test case is intended to check two GPIOs unidirectional connectivity.
+    So first GPIOs 'out_hwid' and 'in_hwid' are requested from
+    'out_bus/out_addr' and 'in_bus/in_addr' GPIO adapters. Then as it's obvious
+    from the naming the GPIO with 'out_hwid' is set to be output and the GPIO
+    with 'in_hwid' - to be input. At final stage a sequence of values
+    {!ini,ini} is put to the output GPIO. The test will be considered as
+    passed if the same sequence is detected on the input GPIO. In case if the
+    lane is marked as 'invereted' then the sequence of inverted values is
+    expected on the input side.
+type: "localfile"
+exec: "gpio_loopback.sh"
+args: !!omap # Must be ordered map (sequence of mappings) or omitted
+    - out_bus: "undefined"
+    - out_addr: ""
+    - out_hwid: "0"
+    - in_bus: "undefined"
+    - in_addr: ""
+    - in_hwid: "0"
+    - inverted: "no"
+interactive: false
+timeout: 5000

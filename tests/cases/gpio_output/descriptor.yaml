@@ -1,0 +1,21 @@
+%YAML 1.1
+# GPIO output/pulse generator test
+---
+title: "GPIO output/pulse generator test"
+description: |-
+    GPIO output is tested by generating a pulse of the specified 'period' in ms.
+    The number of pulses is calculated from the test 'timeout' by the formulae
+    ('timeout' - 1) / 'period'. GPIO adapter and ID is determined by the triple
+    'bus/addr/hwid'. The test will be considered as passed if the set and got
+    GPIO values match. Although the main goal of the testcase is to check PCB
+    LEDs by creating a bilking effect. So it should be utilized with a visually
+    evaluation performed by a tester.
+type: "localfile"
+exec: "gpio_output.sh"
+args: !!omap # Must be ordered map (sequence of mappings) or omitted
+    - bus: "undefined"
+    - addr: ""
+    - hwid: "0"
+    - period: "1000"
+interactive: false
+timeout: 10000

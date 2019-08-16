@@ -73,6 +73,11 @@ work() {
 	action eth_set_link_up $ETH_SRC_IFACE "false"
 
 	info "Set destination interface '%s' link up\n" "$ETH_DST_IFACE"
+	action eth_set_link_up $ETH_DST_IFACE "false"
+
+	info "Make sure source '%s' and destination '%s' interfaces link is up\n"
+		"$ETH_SRC_IFACE" "$ETH_DST_IFACE"
+	action eth_set_link_up $ETH_SRC_IFACE "true"
 	action eth_set_link_up $ETH_DST_IFACE "true"
 
 	info "Perform link-layer ping of '%s' via '%s' interface\n" \
@@ -88,8 +93,8 @@ epilogue() {
 
 	info "Disable source '%s' and destination '%s' interfaces\n" \
 		 "$ETH_SRC_IFACE" "$ETH_DST_IFACE"
-	eth_set_link_down $ETH_SRC_IFACE
 	eth_set_link_down $ETH_DST_IFACE
+	eth_set_link_down $ETH_SRC_IFACE
 
 	info "Restore previous system console loglevel\n"
 	reset_loglevel

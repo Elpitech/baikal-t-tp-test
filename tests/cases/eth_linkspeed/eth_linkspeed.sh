@@ -79,6 +79,11 @@ work() {
 	action eth_set_link_up $ETH_IFACE1 "false"
 
 	info "Set interface #2 '%s' link up\n" "$ETH_IFACE2"
+	action eth_set_link_up $ETH_IFACE2 "false"
+
+	info "Make sure interfaces #1 '%s' and #2 '%s' link is up\n"
+		"$ETH_IFACE1" "$ETH_IFACE2"
+	action eth_set_link_up $ETH_IFACE1 "true"
 	action eth_set_link_up $ETH_IFACE2 "true"
 
 	info "Retrieve interface #1 '%s' speed and duplex\n" "$ETH_IFACE1"
@@ -109,8 +114,8 @@ epilogue() {
 	del_cleanup_method
 
 	info "Disable interfaces #1 '%s' and #2 '%s'\n" "$ETH_IFACE1" "$ETH_IFACE2"
-	eth_set_link_down $ETH_IFACE1
 	eth_set_link_down $ETH_IFACE2
+	eth_set_link_down $ETH_IFACE1
 
 	info "Restore previous system console loglevel\n"
 	reset_loglevel

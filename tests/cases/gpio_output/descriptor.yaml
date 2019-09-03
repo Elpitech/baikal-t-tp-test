@@ -8,7 +8,7 @@ description: |-
     ('timeout' - 1) / 'period'. GPIO adapter and ID is determined by the triple
     'bus/addr/hwid'. The test will be considered as passed if the set and got
     GPIO values match. Although the main goal of the testcase is to check PCB
-    LEDs by creating a bilking effect. So it should be utilized with a visually
+    LEDs by creating a bilking effect. So it should be utilized with a visual
     evaluation performed by a tester.
 type: "localfile"
 exec: "gpio_output.sh"

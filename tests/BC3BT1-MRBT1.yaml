@@ -1,0 +1,98 @@
+%YAML 1.1
+# BC3BT1-MRBT1 industrial board test scenario
+---
+title: "BC3BT1-MRBT1 board test scenario"
+description: |-
+    BC3BT1-MRBT1 is a board spcifically created for Axitech to comply the
+    industrial temperature ranges. It is equipped with a set of devices
+    connected to the MRBT1 mezzanine card interfaces:
+    + m2 solt with Sierra Wireless em7430 4G/LTE modem
+    + 1xUSB type A port,
+    + 1xSATA 16GB SSD,
+    + 2xGBE RJ45 sockets,
+    + 1xUSB-SD port,
+    + 1xMMC-SPI port,
+    + KAM200 port with 2xGPIO, 1xRS485, 1xUART, 3.8V/24V output,
+    + 1xPulse counter (BMC firmware based),
+    + 2xRelay isolated,
+    + 4xInputs isolated (5V tolerate), 
+    + 6xLEDs,
+    This scenarion is created to test the BC3BT1-MRBT1 couple in the framework
+    of testcases the described interfaces.
+tests: !!omap # Must be ordered map (sequence of mappings) or omitted
+    - usb_port: {info: "USB root port 1-1 test", port: "1-1"}
+    - usb_port: {info: "USB usb2640 port (USB-SD) 1-1.1 test", port: "1-1.1"}
+    - usb_port: {info: "USB usb2640 port (cp2108) 1-1.2 test", port: "1-1.2"}
+    - usb_port: {info: "USB usb2640 port (usb513) 1-1.3 test", port: "1-1.3"}
+    - usb_port: {info: "USB usb2513 port (uart KAM200) 1-1.3.1 test", port: "1-1.3.1"}
+    - usb_port: {info: "USB usb2513 port (m2 em7430) 1-1.3.2 test", port: "1-1.3.2"}
+    - usb_port: {info: "USB usb2513 port (USB-A) 1-1.3.3 test", port: "1-1.3.3"}
+    - storage_timings: {info: "SATA0 timings test", iface: "sata", port: "0",
+                                                    cached: "1000", buffered: "50"}
+    - storage_timings: {info: "USB-flash storage timings test", iface: "usb", port: "1-1.3.3:1.0",
+                                                                cached: "1000", buffered: "10"}
+    - storage_timings: {info: "USB-SD storage timings test", iface: "usb", port: "1-1.1:1.0",
+                                                             cached: "1000", buffered: "10"}
+    - storage_timings: {info: "MMC-SPI storage timings test", iface: "mmc", port: "0",
+                                                              cached: "500", buffered: "1"}
+    - eth_linkspeed: {info: "GBE0/GBE1 link speed test", iface1_bus: "soc", iface1_addr: "soc0/axi/1f05e000.eth1",
+                                                         iface2_bus: "soc", iface2_addr: "soc0/axi/1f060000.eth2",
+                                                         speed: "1000", duplex: "Full"}
+    - eth_linkloop: {info: "GBE0 -> GBE1 loopback test", src_bus: "soc", src_addr: "soc0/axi/1f05e000.eth1",
+                                                         dst_bus: "soc", dst_addr: "soc0/axi/1f060000.eth2"}
+    - eth_linkloop: {info: "GBE1 -> GBE0 loopback test", src_bus: "soc", src_addr: "soc0/axi/1f060000.eth2",
+                                                         dst_bus: "soc", dst_addr: "soc0/axi/1f05e000.eth1"}
+    - gpio_output: {info: "GPIO led_ok blinking", bus: "i2c", addr: "0-0022", hwid: "0", period: "500"}
+    - gpio_output: {info: "GPIO led_err blinking", bus: "i2c", addr: "0-0022", hwid: "1", period: "500"}
+    - gpio_output: {info: "GPIO led_po_err blinking", bus: "i2c", addr: "0-0022", hwid: "2", period: "500"}
+    - gpio_output: {info: "GPIO led_po_ok blinking", bus: "i2c", addr: "0-0022", hwid: "3", period: "500"}
+    - gpio_loopback: {info: "KAM200 GPIO1->GPIO2 out test", out_bus: "i2c", out_addr: "0-0022", out_hwid: "12",
+                                                            in_bus: "i2c", in_addr: "0-0022", in_hwid: "13", inverted: "no"}
+    - gpio_loopback: {info: "KAM200 GPIO2->GPIO1 out test", out_bus: "i2c", out_addr: "0-0022", out_hwid: "13",
+                                                            in_bus: "i2c", in_addr: "0-0022", in_hwid: "12", inverted: "no"}
+    - gpio_input: {info: "Intrusion pin test (waiting for one)", bus: "i2c", addr: "0-0022", hwid: "15", value: "1"}
+    - gpio_output: {info: "GPIO led_dig_in0 blinking", bus: "i2c", addr: "0-0023", hwid: "0", period: "500"}
+    - gpio_output: {info: "GPIO led_dig_in1 blinking", bus: "i2c", addr: "0-0023", hwid: "1", period: "500"}
+    - gpio_output: {info: "GPIO led_dig_in2 blinking", bus: "i2c", addr: "0-0023", hwid: "2", period: "500"}
+    - gpio_output: {info: "GPIO led_dig_in3 blinking", bus: "i2c", addr: "0-0023", hwid: "3", period: "500"}
+    - gpio_output: {info: "GPIO led_dig_out0 blinking", bus: "i2c", addr: "0-0023", hwid: "4", period: "500"}
+    - gpio_output: {info: "GPIO led_dig_out1 blinking", bus: "i2c", addr: "0-0023", hwid: "5", period: "500"}
+    - gpio_loopback: {info: "Relay OUT0 -> Input IN1 test", out_bus: "i2c", out_addr: "0-0023", out_hwid: "10",
+                                                            in_bus: "i2c", in_addr: "0-0023", in_hwid: "6", inverted: "no"}
+    - gpio_loopback: {info: "Relay OUT0 -> Input IN2 test", out_bus: "i2c", out_addr: "0-0023", out_hwid: "10",
+                                                            in_bus: "i2c", in_addr: "0-0023", in_hwid: "7", inverted: "no"}
+    - gpio_loopback: {info: "Relay OUT1 -> Input IN3 test", out_bus: "i2c", out_addr: "0-0023", out_hwid: "11",
+                                                            in_bus: "i2c", in_addr: "0-0023", in_hwid: "8", inverted: "no"}
+    - gpio_loopback: {info: "Relay OUT1 -> Input IN4 test", out_bus: "i2c", out_addr: "0-0023", out_hwid: "11",
+                                                            in_bus: "i2c", in_addr: "0-0023", in_hwid: "9", inverted: "no"}
+    - rtc_access: {info: "RTC pcf2129 hardware test", bus: "i2c", addr: "0-0051", date: "2000-01-01"}
+    - sensors_input: {info: "PVT voltage sensor test", bus: "soc", addr: "soc0/apb/1f200000.pvt",
+                                                       type: "in1", min: "0.8", max: "1.2"}
+    - sensors_input: {info: "PVT temperature sensor test", bus: "soc", addr: "soc0/apb/1f200000.pvt",
+                                                           type: "temp1", min: "10.0", max: "95.0"}
+    - sensors_input: {info: "ads1000 voltage sensor test", bus: "i2c", addr: "0-0048",
+                                                           type: "in0", min: "9.0", max: "36.0"}
+    - serial_loopback: {info: "Full COM-port loopback test", src_bus: "usb", src_addr: "1-1.2:1.0/ttyUSB0", src_port: "0",
+                                                             dst_bus: "usb", dst_addr: "1-1.2:1.0/ttyUSB0", dst_port: "0",
+                                                             baud: "115200", rs485: "no"}
+    - serial_loopback: {info: "RS485 #1 -> #2 loopback test", src_bus: "usb", src_addr: "1-1.2:1.1/ttyUSB1", src_port: "0",
+                                                              dst_bus: "usb", dst_addr: "1-1.2:1.2/ttyUSB2", dst_port: "0",
+                                                              baud: "115200", rs485: "no"}
+    - serial_loopback: {info: "RS485 #2 -> #1 loopback test", src_bus: "usb", src_addr: "1-1.2:1.2/ttyUSB2", src_port: "0",
+                                                              dst_bus: "usb", dst_addr: "1-1.2:1.1/ttyUSB1", dst_port: "0",
+                                                              baud: "115200", rs485: "no"}
+    - serial_loopback: {info: "RS485 KAM -> #1 loopback test", src_bus: "usb", src_addr: "1-1.2:1.3/ttyUSB3", src_port: "0",
+                                                              dst_bus: "usb", dst_addr: "1-1.2:1.1/ttyUSB1", dst_port: "0",
+                                                              baud: "115200", rs485: "no"}
+    - serial_loopback: {info: "RS485 #1 -> KAM loopback test", src_bus: "usb", src_addr: "1-1.2:1.1/ttyUSB1", src_port: "0",
+                                                               dst_bus: "usb", dst_addr: "1-1.2:1.3/ttyUSB3", dst_port: "0",
+                                                               baud: "115200", rs485: "no"}
+    - serial_loopback: {info: "RS485 KAM -> #2 loopback test", src_bus: "usb", src_addr: "1-1.2:1.3/ttyUSB3", src_port: "0",
+                                                              dst_bus: "usb", dst_addr: "1-1.2:1.2/ttyUSB2", dst_port: "0",
+                                                              baud: "115200", rs485: "no"}
+    - serial_loopback: {info: "RS485 #2 -> KAM loopback test", src_bus: "usb", src_addr: "1-1.2:1.2/ttyUSB2", src_port: "0",
+                                                               dst_bus: "usb", dst_addr: "1-1.2:1.3/ttyUSB3", dst_port: "0",
+                                                               baud: "115200", rs485: "no"}
+    - serial_loopback: {info: "KAM200 UART loopback test", src_bus: "usb", src_addr: "1-1.3.1:1.0/ttyUSB4", src_port: "0",
+                                                           dst_bus: "usb", dst_addr: "1-1.3.1:1.0/ttyUSB4", dst_port: "0",
+                                                           baud: "115200", rs485: "no"}

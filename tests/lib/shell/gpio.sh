@@ -154,9 +154,9 @@ gpio_wait_value() {
 		_curval=$(gpio_get_value "$_id") || return $?
 		[ "$_curval" -eq "$_expval" ] && return $SUCCESS
 
-        [ $((--_cnt)) -gt 0 ] || return $FAILURE
-        sleep 0.001
-    done
+		[ $((--_cnt)) -gt 0 ] || return $FAILURE
+		sleep 0.001
+	done
 }
 
 #
@@ -172,7 +172,7 @@ gpio_generate_pulse() {
 
 	_duration=$((${TPTEST_TIMEOUT:-0} - 1000))
 	_cnt=$((2 * (_duration / _period)))
-	_delay=$(calc "${_duration} / (2 * ${_period})") || return $?
+	_delay=$(calc "${_duration} / (${_cnt} * 1000)") || return $?
 
 	_expval="1"
 	while :; do
@@ -183,8 +183,8 @@ gpio_generate_pulse() {
 
 		sleep $_delay
 
-        [ $((--_cnt)) -gt 0 ] || break
-    done
+		[ $((--_cnt)) -gt 0 ] || break
+	done
 
 	return $SUCCESS
 }

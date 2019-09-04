@@ -32,6 +32,7 @@ SERIAL_ARG5_DST_ADDR=${5:-"soc0/apb/1f04b000.serial1"}
 SERIAL_ARG6_DST_PORT=${6:-"0"}
 SERIAL_ARG7_BAUD=${7:-"9600"}
 SERIAL_ARG8_RS485=${8:-"no"}
+SERIAL_ARG9_MODEM=${9:-"no"}
 
 SERIAL_LOOPBACK_DEPENDS="mktemp cat kill rm sleep"
 SERIAL_TEMP=""
@@ -49,8 +50,8 @@ prologue() {
 		"$SERIAL_ARG1_SRC_BUS" "$SERIAL_ARG2_SRC_ADDR" "$SERIAL_ARG3_SRC_PORT"
 	info "Test parameters: dst_bus='%s', dst_addr='%s', dst_port='%u'\n" \
 		"$SERIAL_ARG4_DST_BUS" "$SERIAL_ARG5_DST_ADDR" "$SERIAL_ARG6_DST_PORT"
-	info "Test parameters: baud='%u', rs485='%s'\n" \
-		"$SERIAL_ARG7_BAUD" "$SERIAL_ARG8_RS485"
+	info "Test parameters: baud='%u', rs485='%s', modem='%s'\n" \
+		"$SERIAL_ARG7_BAUD" "$SERIAL_ARG8_RS485" "$SERIAL_ARG9_MODEM"
 
 	info "Check test dependencies: %s\n" "$SERIAL_LOOPBACK_DEPENDS"
 	action test_commands $SERIAL_LOOPBACK_DEPENDS
@@ -108,6 +109,14 @@ work() {
 
 		info "Enable rs485 mode of the destination device '%s'\n" "$SERIAL_DST_DEV"
 		action serial_setrs485 "$SERIAL_DST_DEV"
+	fi
+
+	if bool "$SERIAL_ARG9_MODEM" true; then
+		info "Enable full COM-port mode of the source device '%s'\n" "$SERIAL_SRC_DEV"
+		action serial_setmodem "$SERIAL_SRC_DEV"
+
+		info "Enable full COM-port mode of the destination device '%s'\n" "$SERIAL_DST_DEV"
+		action serial_setmodem "$SERIAL_DST_DEV"
 	fi
 
 	info "Open the destination device '%s' to receive the pattern\n" "$SERIAL_DST_DEV"

@@ -93,4 +93,14 @@ serial_setrs485() {
 	stty -F "$_dev" rs485
 }
 
+#
+# Set full modem mode of the passed ttyX
+#
+# $1 ... Device path (/dev/ttyX)
+serial_setmodem() {
+	local _dev="$1"
+
+	stty -F "$_dev" -clocal crtscts
+}
+
 serial_check_prerequisite

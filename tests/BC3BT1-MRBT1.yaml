@@ -74,7 +74,7 @@ tests: !!omap # Must be ordered map (sequence of mappings) or omitted
                                                            type: "in0", min: "9.0", max: "36.0"}
     - serial_loopback: {info: "Full COM-port loopback test", src_bus: "usb", src_addr: "1-1.2:1.0/ttyUSB0", src_port: "0",
                                                              dst_bus: "usb", dst_addr: "1-1.2:1.0/ttyUSB0", dst_port: "0",
-                                                             baud: "115200", rs485: "no"}
+                                                             baud: "115200", modem: "yes"}
     - serial_loopback: {info: "RS485 #1 -> #2 loopback test", src_bus: "usb", src_addr: "1-1.2:1.1/ttyUSB1", src_port: "0",
                                                               dst_bus: "usb", dst_addr: "1-1.2:1.2/ttyUSB2", dst_port: "0",
                                                               baud: "115200", rs485: "no"}

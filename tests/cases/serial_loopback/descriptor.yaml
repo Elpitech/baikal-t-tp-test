@@ -17,7 +17,8 @@ description: |-
     like 'cp2108' support 'rs485' modes their driver actually can't
     perform the 'rs485' paramter customization. It is supposed to be enabled
     in the device firmware, so in this case the 'rs485' argument should
-    be set to 'no'.
+    be set to 'no'. In case if the port is supposed to be used in full COM-port
+    mode, 'modem' setting should be switched on.
 type: "localfile"
 exec: "serial_loopback.sh"
 args: !!omap # Must be ordered map (sequence of mappings) or omitted
@@ -29,5 +30,6 @@ args: !!omap # Must be ordered map (sequence of mappings) or omitted
     - dst_port: "0"
     - baud: "9600"
     - rs485: "no"
+    - modem: "no"
 interactive: false
 timeout: 5000
